@@ -104,7 +104,13 @@ const Home = () => {
     // data.append("file", file);
 
     try {
-      const res = await axios.post(`${URL}/uploads`, fd);
+      const res = await axios.post(`${URL}/uploads`, fd, {
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }
+      });
       console.log(res);
       const datasandstatus = res.data;
 

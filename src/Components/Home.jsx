@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { shallow } from "zustand/shallow";
 import { useSongStore } from "../store/songInfostore";
-import { Navigate, redirect } from "react-router-dom";
+import { Navigate, redirect,useNavigate } from "react-router-dom";
 
 import "./home.css";
 
@@ -14,12 +14,12 @@ const URL =
     : import.meta.env.VITE_SERVER_URL_PROD;
 
 const Home = () => {
-  const [permission, setPermission] = useState(false);
-  const mediaRecorder = useRef(null);
+ 
+  const navigate = useNavigate();
   const [recordingStatus, setRecordingStatus] = useState("inactive");
   const [stream, setStream] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
-  const [audio, setAudio] = useState(null);
+  
   const [isNavigate, setIsNavigate] = useState(false);
 
   const updateSongInfo = useSongStore((state) => state.updateSongInfo);
@@ -38,7 +38,7 @@ const Home = () => {
           const mediaStream = await navigator.mediaDevices.getUserMedia({
             audio: true,
           });
-          setPermission(true);
+         
           setStream(mediaStream);
         } catch (err) {
           alert(err.message);
@@ -73,7 +73,7 @@ const Home = () => {
 
     mediaRecorder.onstop = () => {
       const blob = new Blob(localAudioChunks, { type: "audio/webm" });
-      setAudioChunks([]);
+      localAudioChunks = [];
       console.log(blob);
       console.log(typeof blob);
       // const audioUrl = URL.createObjectURL(blob);
@@ -99,9 +99,7 @@ const Home = () => {
 
     fd.append("upl", blob, "blobby.wav");
 
-    // const data = new FormData();
-    // data.append("name", name);
-    // data.append("file", file);
+  
 
     try {
       const res = await axios.post(`${URL}/uploads`, fd, {
@@ -162,7 +160,14 @@ const Home = () => {
         useSongStore.getState().songInfo
       );
 
-      setIsNavigate(true);
+      // setIsNavigate(true);
+      navigate("/detected");
+    }
+    else {
+      window.navigator.vibrate(300, 100, 300);
+      console.log("inside failed");
+      navigate("/failed");
+   
     }
   };
 

@@ -16,7 +16,7 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 
 ## Server
 
-#### Server is deployed on [railways](https://railway.app/)
+#### Server is deployed on [render](https://render.com/)
 
 #### Here is the server [SOURCE CODE](https://github.com/yashkr90/song-detector-server)
  

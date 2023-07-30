@@ -91,6 +91,7 @@ const Home = () => {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Headers": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log(res);
